@@ -1,0 +1,34 @@
+{
+    "items": [
+        {
+            "location": "Bury",
+            "population": 78723,
+            "region": "North West"
+        },
+        {
+            "location": "Hull",
+            "population": 260645,
+            "region": "Yorkshire and the Humber"
+        },
+        {
+            "location": "Leeds",
+            "population": 789194,
+            "region": "Yorkshire and the Humber"
+        },
+        {
+            "location": "Manchester",
+            "population": 547627,
+            "region": "North West"
+        },
+        {
+            "location": "Scarborough",
+            "population": 61749,
+            "region": "Yorkshire and the Humber"
+        },
+        {
+            "location": "York",
+            "population": 209893,
+            "region": "Yorkshire and the Humber"
+        }
+    ]
+}
