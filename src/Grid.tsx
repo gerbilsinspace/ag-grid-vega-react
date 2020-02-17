@@ -4,7 +4,7 @@ import BarChart from "./BarChart";
 import PieChart from "./PieChart";
 import Tooltip from "./Tooltip";
 
-import useDataDiff from "./useDataDiff";
+import useGridDiff from "./useGridDiff";
 
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-balham.css";
@@ -17,9 +17,10 @@ const Grid = () => {
         initialData,
         sortedFilteredData,
         setSortedFilteredData
-    ] = useDataDiff(itemsOld, itemsNew);
+    ] = useGridDiff(itemsOld, itemsNew);
 
     const [columns, setColumns] = useState<AgGridColumnProps[]>([]);
+
     useEffect(() => {
         const initialColumns = [
             {
@@ -51,20 +52,14 @@ const Grid = () => {
         setColumns(initialColumns);
     }, []);
 
-    const onFilterChanged = (params: any) => {
-        const filteredItems = params.api
-            .getModel()
-            .rootNode.childrenAfterFilter.map(
-                (item: { data: any }) => item.data
-            );
-        setSortedFilteredData(filteredItems);
-    };
-
-    const onSortChanged = (params: any) => {
-        const sortedItems = params.api
-            .getModel()
-            .rootNode.childrenAfterSort.map((item: { data: any }) => item.data);
-        setSortedFilteredData(sortedItems);
+    const onChanged = (params: any, filter: boolean = true) => {
+        const { rootNode } = params.api.getModel();
+        const data = filter
+            ? rootNode.childrenAfterFilter
+            : rootNode.childrenAfterSort;
+        return setSortedFilteredData(
+            data.map((item: { data: any }) => item.data)
+        );
     };
 
     const getRowClass = ({ data }: any) => {
@@ -97,8 +92,8 @@ const Grid = () => {
                     rowData={initialData}
                     rowSelection='multiple'
                     animateRows
-                    onFilterChanged={onFilterChanged}
-                    onSortChanged={onSortChanged}
+                    onFilterChanged={params => onChanged(params, true)}
+                    onSortChanged={params => onChanged(params, false)}
                     getRowClass={getRowClass}
                     frameworkComponents={{ customTooltip: Tooltip }}
                 />
