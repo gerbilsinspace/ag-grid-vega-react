@@ -1,12 +1,6 @@
 {
     "itemsOld": [
         {
-            "id": "b4e25b9b-5b95-4ea3-be85-2a1da95d33e0",
-            "location": "Bury",
-            "population": 78723,
-            "region": "North West"
-        },
-        {
             "id": "45fc1b77-eb0d-4723-9ddb-b6c5d0b14e97",
             "location": "Hull",
             "population": 250645,
@@ -31,28 +25,22 @@
             "region": "Yorkshire and the Humber"
         },
         {
-            "id": "737dda2e-ff95-4ec6-b3de-a3db8decdd5f",
-            "location": "York",
-            "population": 209893,
-            "region": "Yorkshire and the Humber"
-        },
-        {
             "id": "e37dda2e-ff95-4ec6-b3de-a3db8decdd5e",
-            "location": "Deleted Item (York)",
+            "location": "York",
             "population": 209893,
             "region": "Yorkshire and the Humber"
         }
     ],
     "itemsNew": [
         {
-            "id": "b4e25b9b-5b95-4ea3-be85-2a1da95d33e0",
+            "id": "5ba080b7-d3ac-46d6-9653-10583b6fa8c5",
             "location": "Bury",
             "population": 78723,
             "region": "North West"
         },
         {
             "id": "45fc1b77-eb0d-4723-9ddb-b6c5d0b14e97",
-            "location": "Edited Item (Hull)",
+            "location": "Kingston upon Hull",
             "population": 260645,
             "region": "Yorkshire and the Humber"
         },
@@ -73,18 +61,6 @@
             "location": "Scarborough",
             "population": 61749,
             "region": "Yorkshire and the Humber"
-        },
-        {
-            "id": "737dda2e-ff95-4ec6-b3de-a3db8decdd5f",
-            "location": "York",
-            "population": 209893,
-            "region": "Yorkshire and the Humber"
-        },
-        {
-            "id": "5ba080b7-d3ac-46d6-9653-10583b6fa8c5",
-            "location": "Added Item (Bury)",
-            "population": 78723,
-            "region": "North West"
         }
     ]
 }

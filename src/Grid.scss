@@ -1,11 +1,23 @@
 .ag-root {
     .added {
         background: rgba(193, 240, 193, 0.8);
+
+        &.ag-row-hover {
+            background: rgba(170, 238, 170, 0.8);
+        }
     }
     .edited {
         background: rgba(251, 252, 189, 0.8);
+
+        &.ag-row-hover {
+            background: rgba(238, 240, 166, 0.8);
+        }
     }
     .removed {
         background: rgba(255, 185, 176, 0.8);
+
+        &.ag-row-hover {
+            background: rgba(241, 162, 152, 0.8);
+        }
     }
 }

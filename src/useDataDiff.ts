@@ -68,11 +68,19 @@ const useDataDiff = (itemsOld: any, itemsNew: any) => {
                 };
 
                 if (editedItems.includes(item)) {
-                    result = { ...result, edited: true };
+                    result = {
+                        ...result,
+                        edited: true,
+                        message: "Item was edited."
+                    };
                 }
 
                 if (addedItems.includes(item)) {
-                    result = { ...result, added: true };
+                    result = {
+                        ...result,
+                        added: true,
+                        message: "Item was added."
+                    };
                 }
 
                 return result;
@@ -81,7 +89,8 @@ const useDataDiff = (itemsOld: any, itemsNew: any) => {
                 ...item,
                 edited: false,
                 added: false,
-                removed: true
+                removed: true,
+                message: "Item was removed"
             }))
         ];
 

@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { AgGridReact, AgGridColumnProps } from "ag-grid-react";
+import BarChart from "./BarChart";
+import PieChart from "./PieChart";
+import Tooltip from "./Tooltip";
+
+import useDataDiff from "./useDataDiff";
 
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-balham.css";
 import "./Grid.scss";
 
 import { itemsOld, itemsNew } from "./data.json";
-import BarChart from "./BarChart";
-import PieChart from "./PieChart";
-
-import useDataDiff from "./useDataDiff";
 
 const Grid = () => {
     const [
@@ -25,19 +26,25 @@ const Grid = () => {
                 headerName: "Location",
                 field: "location",
                 sortable: true,
-                filter: "agTextColumnFilter"
+                filter: "agTextColumnFilter",
+                tooltipField: "location",
+                tooltipComponent: "customTooltip"
             },
             {
                 headerName: "Population",
                 field: "population",
                 sortable: true,
-                filter: "agNumberColumnFilter"
+                filter: "agNumberColumnFilter",
+                tooltipField: "population",
+                tooltipComponent: "customTooltip"
             },
             {
                 headerName: "Region",
                 field: "region",
                 sortable: true,
-                filter: "agTextColumnFilter"
+                filter: "agTextColumnFilter",
+                tooltipField: "region",
+                tooltipComponent: "customTooltip"
             }
         ];
 
@@ -83,7 +90,7 @@ const Grid = () => {
         <>
             <div
                 className='ag-theme-balham'
-                style={{ height: "200px", width: "620px" }}
+                style={{ height: "203px", width: "602px" }}
             >
                 <AgGridReact
                     columnDefs={columns}
@@ -93,6 +100,7 @@ const Grid = () => {
                     onFilterChanged={onFilterChanged}
                     onSortChanged={onSortChanged}
                     getRowClass={getRowClass}
+                    frameworkComponents={{ customTooltip: Tooltip }}
                 />
             </div>
 

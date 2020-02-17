@@ -6,4 +6,6 @@ export interface DataType {
     added?: boolean;
     removed?: boolean;
     edited?: boolean;
+    message?: string;
+    tooltipValueGetter?: () => {};
 }

@@ -109,7 +109,7 @@ const Visualisations = ({ data }: { data: DataType[] }) => {
             data: [
                 {
                     name: "table",
-                    values: data.filter(item => !item.removed)
+                    values: data
                 }
             ]
         });
