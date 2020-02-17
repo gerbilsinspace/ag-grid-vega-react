@@ -115,10 +115,12 @@ const PieChart = ({ data }: { data: DataType[] }) => {
             data: [
                 {
                     name: "table",
-                    values: data.map(item => ({
-                        id: `${item.location}: ${item.population}`,
-                        field: item.population
-                    })),
+                    values: data
+                        .filter(item => !item.removed)
+                        .map(item => ({
+                            id: `${item.location}: ${item.population}`,
+                            field: item.population
+                        })),
                     transform: [
                         {
                             type: "pie",

@@ -1,8 +1,11 @@
 .ag-root {
-    .selected {
+    .added {
         background: rgba(193, 240, 193, 0.8);
     }
-    .danger {
+    .edited {
+        background: rgba(251, 252, 189, 0.8);
+    }
+    .removed {
         background: rgba(255, 185, 176, 0.8);
     }
 }

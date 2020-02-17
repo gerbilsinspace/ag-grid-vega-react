@@ -1,19 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { AgGridReact, AgGridColumnProps } from "ag-grid-react";
+
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-balham.css";
 import "./Grid.scss";
 
-import { items } from "./data.json";
+import { itemsOld, itemsNew } from "./data.json";
 import BarChart from "./BarChart";
 import PieChart from "./PieChart";
-import { DataType } from "./GridTypes";
+
+import useDataDiff from "./useDataDiff";
 
 const Grid = () => {
-    const [columns, setColumns] = useState<AgGridColumnProps[]>([]);
-    const [data, setData] = useState<DataType[]>([]);
-    const [filteredData, setFilteredData] = useState<DataType[]>([]);
+    const [
+        initialData,
+        sortedFilteredData,
+        setSortedFilteredData
+    ] = useDataDiff(itemsOld, itemsNew);
 
+    const [columns, setColumns] = useState<AgGridColumnProps[]>([]);
     useEffect(() => {
         const initialColumns = [
             {
@@ -35,9 +40,8 @@ const Grid = () => {
                 filter: "agTextColumnFilter"
             }
         ];
+
         setColumns(initialColumns);
-        setData(items);
-        setFilteredData(items);
     }, []);
 
     const onFilterChanged = (params: any) => {
@@ -46,14 +50,33 @@ const Grid = () => {
             .rootNode.childrenAfterFilter.map(
                 (item: { data: any }) => item.data
             );
-        setFilteredData(filteredItems);
+        setSortedFilteredData(filteredItems);
     };
 
     const onSortChanged = (params: any) => {
         const sortedItems = params.api
             .getModel()
             .rootNode.childrenAfterSort.map((item: { data: any }) => item.data);
-        setFilteredData(sortedItems);
+        setSortedFilteredData(sortedItems);
+    };
+
+    const getRowClass = ({ data }: any) => {
+        const { edited, removed, added } = data;
+        let classes = "";
+
+        if (edited) {
+            classes = classes.concat(" ", "edited");
+        }
+
+        if (removed) {
+            classes = classes.concat(" ", "removed");
+        }
+
+        if (added) {
+            classes = classes.concat(" ", "added");
+        }
+
+        return classes;
     };
 
     return (
@@ -64,17 +87,17 @@ const Grid = () => {
             >
                 <AgGridReact
                     columnDefs={columns}
-                    rowData={data}
+                    rowData={initialData}
                     rowSelection='multiple'
                     animateRows
                     onFilterChanged={onFilterChanged}
                     onSortChanged={onSortChanged}
+                    getRowClass={getRowClass}
                 />
             </div>
 
-            <BarChart data={filteredData} />
-            <div />
-            <PieChart data={filteredData} />
+            <BarChart data={sortedFilteredData} />
+            <PieChart data={sortedFilteredData} />
         </>
     );
 };

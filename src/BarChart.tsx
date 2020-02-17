@@ -8,7 +8,7 @@ const initialSpec: Spec = {
     $schema: "https://vega.github.io/schema/vega/v5.json",
     description: "Population",
     title: "Latest City Population from Wikipedia",
-    width: 400,
+    width: 800,
     height: 400,
     padding: { left: 5, right: 5, top: 5, bottom: 5 },
 
@@ -109,7 +109,7 @@ const Visualisations = ({ data }: { data: DataType[] }) => {
             data: [
                 {
                     name: "table",
-                    values: data
+                    values: data.filter(item => !item.removed)
                 }
             ]
         });
