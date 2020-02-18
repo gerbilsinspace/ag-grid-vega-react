@@ -1,6 +1,7 @@
 import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import { DataType } from "./GridTypes";
 import * as R from "rambda";
+import diff from "deep-diff";
 
 // I want to get three lists. deleted items, added items, and edited items.
 // R.difference can let us know when items are in the first list, but
@@ -19,8 +20,30 @@ const useDataDiff = (itemsOld: any, itemsNew: any) => {
 
     useEffect(() => {
         const getId = (item: { id: string }) => item.id;
-        const getData = (id: string, items: any[]) =>
-            items.find(item => item.id === id);
+        const getData = (id: string, newItemIDs: any[], oldItemIDs?: any[]) => {
+            const newItems = newItemIDs.find(item => item.id === id);
+
+            if (!oldItemIDs) {
+                return newItems;
+            }
+
+            const oldItems = oldItemIDs.find(item => item.id === id);
+
+            const result = {
+                ...newItems,
+                diff: diff(oldItems, newItems),
+                message: ""
+            };
+
+            result.message = result.diff.reduce(
+                (acc: string, diffItem: any) => {
+                    const path = diffItem.path.join(" ");
+                    return `${acc} ${path} changed from ${diffItem.lhs} to ${diffItem.rhs}.`.trim();
+                },
+                ""
+            );
+            return result;
+        };
 
         const editedAndRemovedItems: DataType[] = R.difference(
             itemsOld,
@@ -56,7 +79,7 @@ const useDataDiff = (itemsOld: any, itemsNew: any) => {
                     id => ![...removedItemIDs, ...addedItemIDs].includes(id)
                 )
             )
-        ).map((id: string) => getData(id, itemsNew));
+        ).map((id: string) => getData(id, itemsNew, itemsOld));
 
         const items = [
             ...itemsNew.map((item: any) => {
@@ -67,30 +90,30 @@ const useDataDiff = (itemsOld: any, itemsNew: any) => {
                     removed: false
                 };
 
-                if (editedItems.includes(item)) {
+                if (editedItems.some(editedItem => editedItem.id === item.id)) {
                     result = {
                         ...result,
-                        edited: true,
-                        message: "Item was edited."
+                        edited: true
                     };
                 }
 
                 if (addedItems.includes(item)) {
                     result = {
                         ...result,
-                        added: true,
-                        message: "Item was added."
+                        added: true
                     };
                 }
 
+                console.log(result);
+
                 return result;
             }),
+
             ...removedItems.map(item => ({
                 ...item,
                 edited: false,
                 added: false,
-                removed: true,
-                message: "Item was removed"
+                removed: true
             }))
         ];
 
