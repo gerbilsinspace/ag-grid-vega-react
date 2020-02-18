@@ -52,11 +52,12 @@ const Grid = () => {
         setColumns(initialColumns);
     }, []);
 
-    const onChanged = (params: any, filter: boolean = true) => {
+    const onChanged = (params: any, filterType: string = "filter") => {
         const { rootNode } = params.api.getModel();
-        const data = filter
-            ? rootNode.childrenAfterFilter
-            : rootNode.childrenAfterSort;
+        const data =
+            filterType === "filter"
+                ? rootNode.childrenAfterFilter
+                : rootNode.childrenAfterSort;
         return setSortedFilteredData(
             data.map((item: { data: any }) => item.data)
         );
@@ -92,8 +93,8 @@ const Grid = () => {
                     rowData={initialData}
                     rowSelection='multiple'
                     animateRows
-                    onFilterChanged={params => onChanged(params, true)}
-                    onSortChanged={params => onChanged(params, false)}
+                    onFilterChanged={params => onChanged(params, "filter")}
+                    onSortChanged={params => onChanged(params, "sort")}
                     getRowClass={getRowClass}
                     frameworkComponents={{ customTooltip: Tooltip }}
                 />
