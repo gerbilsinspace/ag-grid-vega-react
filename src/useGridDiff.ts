@@ -104,8 +104,6 @@ const useDataDiff = (itemsOld: any, itemsNew: any) => {
                     };
                 }
 
-                console.log(result);
-
                 return result;
             }),
 
